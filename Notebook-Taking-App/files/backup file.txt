@@ -1,0 +1,136 @@
+Here is my insex.ejs file
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📑Note taking Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+       body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            /* background-color: #333; */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="main w-full min-h-screen bg-zinc-900">
+
+        <header class="bg-zinc-900 p-4 text-white">
+            <h1 class=" text-yellow-400 text-3xl font-bold text-center py-6"> 📑NoteBook-Note Taking Application</h1>
+        </header>
+
+        <div class="form p-10 text-white y-2">
+            <% if (editMode) { %>
+                <!-- Edit task frm -->
+                <h1 class="text-3xl font-bold mb-4 text-gray-800">Update Note📑</h1>
+                <form action="/update/<%= encodeURIComponent(editFile.filename) %>" method="post">
+                    <input class="block w-full rounded-md px-6 py-2 bg-zinc-800 text-white" type="text" name="title" value="<%= editFile.filename.replace('.txt', '') %>" required>
+                    <textarea class="block w-full rounded-md mt-2 px-5 py-2 bg-zinc-800 text-white" name="content" required><%= editFile.filedata %></textarea>
+                    <input class="mt-2 bg-yellow-600 px-5 py-2" type="submit" value="Update Task">
+                </form>
+            <% } else { %>
+                <!-- Add new task -->
+                <form action="/create" method="post">
+                   
+        
+                    <h1 class="text-3xl font-bold mb-4 text-gray-300">Create a New Note📑</h1>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Title</label>
+                         <input class="block w-full rounded-md px-6 py-2 bg-zinc-800 text-white" type="text" name="title" placeholder="Title goes here 📌" required>
+
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Content</label>
+                        <textarea class="block w-full rounded-md mt-2 px-5 py-2 bg-zinc-800 text-white" name="content" placeholder="Write your task details here..." required></textarea>
+                    </div>
+
+                    <input class="mt-2 bg-yellow-600 px-5 py-2" type="submit" value="Create Task">
+                </form>
+            <% } %>
+        </div>
+        
+        <div class="tasks flex gap-3 flex-wrap p-10">
+           <%  if(files.length>0) { %>           
+               <% files.forEach(function(val){ %>
+                  <div class="task w-72 px-3 py-4 rounder-md bg-zinc-800 ">
+                    <!-- <h1 class="text-white text-3xl tracking-tighter">Some task goes here.</h1> -->
+                    <h1 class="text-white text-3xl tracking-tighter"> <%= val %></h1>
+                    <!-- <a class="text-blue-500 inline-block mt-3" href="">Read More</a> -->
+                  
+                    <div class="flex w-full justify-between items-center mt-3" >
+                       
+
+                    <div class="mt-8 p-4">
+
+                    <a class="bg-yellow-600 hover:bg-zinc-700 text-white py-2 px-6 rounded-lg mr-4k" href="/file/<%= val %>">Read More</a>
+                    <a class="bg-zinc-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg " href="/file/<%= val %>">Edit</a>
+                  
+                  </div>
+                  
+
+                  
+                    
+                    </div>
+                  
+                    </p>
+                   </div>
+    
+                   <% }) %>
+                <% } else { %>
+                     <h3 class=" p-10 text-zinc-700">No tasks🔖</h3>
+                 <% } %>
+            
+
+            <!-- <div class="task w-72 px-3 py-4 rounder-md bg-zinc-800 ">
+                <h1 class="text-white text-3xl tracking-tighter">Some task goes here.</h1>
+                <a class="text-blue-500 inline-block mt-3" href="">Read More</a>
+                </p>
+            </div>
+
+
+            <div class="task w-72 px-3 py-4 rounder-md bg-zinc-800 ">
+                <h1 class="text-white text-3xl tracking-tighter">Some task goes here.</h1>
+                <a class="text-blue-500 inline-block mt-3" href="">Read More</a>
+                </p>
+            </div>
+
+
+            <div class="task w-72 px-3 py-4 rounder-md bg-zinc-800 ">
+                <h1 class="text-white text-3xl tracking-tighter">Some task goes here.</h1>
+                <a class="text-blue-500 inline-block mt-3" href="">Read More</a>
+                </p>
+            </div> -->
+
+        
+        </div>
+        <!-- <h3 class=" p-10 text-zinc-700">No tasks🔖</h3> -->
+
+        <!-- Footer -->
+    <footer class="bg-zinc-700 text-white text-center py-4">
+        <p> <a href="https://www.linkedin.com/in/aniket-potbhare-a98b32245/" target="_blank" rel="noopener noreferrer" > Made with ❤ by- Aniket Potbhare</a></p>
+    </footer>
+    </div>
+
+        
+</body>
+
+</html>
